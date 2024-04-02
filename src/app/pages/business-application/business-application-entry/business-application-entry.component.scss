@@ -1,0 +1,63 @@
+.business-application {
+  overflow: auto;
+
+  mat-form-field {
+    width: 100%;
+  }
+  mat-accordion {
+    width: 100%;
+  }
+  .group {
+    border: 1px solid limegreen;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .label {
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .mat-expansion-panel-header {
+    background: #ebf2e0;
+    height: 35px;
+  }
+  .mat-expansion-panel-header.mat-expanded {
+    font-weight: 800;
+    background: #c6d6ac;
+    height: 40px;
+  }
+  .mat-expansion-panel-header-title {
+    font-size: 12px;
+  }
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0 24px;
+    .content {
+      padding: 16px;
+    }
+  }
+  .mat-action-row {
+    padding: unset;
+    height: 36px;
+    button {
+      mat-icon {
+        height: 26px;
+      }
+    }
+  }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 24px;
+  }
+  button.mat-raised-button {
+    margin-right: 10px;
+  }
+  ::ng-deep .mat-expansion-panel-body > .content {
+    padding: 16px;
+  }
+  .cb ::ng-deep .mat-select-arrow-wrapper {
+    height: unset;
+    transform: unset;
+  }
+
+  th.mat-column-file_url {
+    text-align: center;
+  }
+}

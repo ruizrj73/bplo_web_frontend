@@ -1,0 +1,116 @@
+.main-panel {
+  height: 100vh;
+  background-color: unset;
+}
+.main-panel .content {
+  margin-top: 64px;
+  padding: 0 30px 0 30px;
+  /*padding-bottom: 58px;*/
+  min-height: calc(100vh - 64px);
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+::ng-deep .mat-card {
+  background: #ffffffba !important;
+  margin-top: 10px;
+  min-height: calc(100vh - 90px);
+}
+::ng-deep mat-card.entry-form {
+  width: 76vw;
+  height: 85vh;
+  
+  .mat-expansion-panel-spacing {
+    margin: unset;
+  }
+}
+::ng-deep #dimScreen
+{
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,0.5) !important;
+    z-index: 9999;
+}
+
+::ng-deep .mat-mini-fab {
+  width: 28px !important;
+  height: 28px !important;
+  padding: unset !important;
+  
+  .material-icons {
+    font-size: 15px !important;
+    margin-top: -4px !important;
+  }
+}
+::ng-deep .mat-fab {
+  width: 25px !important;
+  height: 25px !important;
+  padding: unset !important;
+  
+  .material-icons {
+    font-size: 15px !important;
+    margin-top: -4px;
+  }
+  .mat-button-wrapper {
+    padding: 0 !important;
+    line-height: unset !important;
+  }
+}
+::ng-deep tr.mat-row {
+  height: 30px !important;
+}
+::ng-deep tr.mat-footer-row {
+  height: 30px !important;
+}
+::ng-deep tr.mat-header-row {
+  height: 35px !important;
+}
+
+::ng-deep .mat-mini-fab.mat-primary, ::ng-deep .mat-fab.mat-primary, ::ng-deep .mat-raised-button.mat-primary {
+  background-color: #35a035;
+}
+::ng-deep .mat-mini-fab.mat-secondary, ::ng-deep .mat-fab.mat-secondary, ::ng-deep .mat-raised-button.mat-secondary {
+  background-color: #3f51b5;
+  color: white;
+}
+::ng-deep .b {
+  font-weight: bold;
+}
+::ng-deep .margin-bottom-5 {
+  margin-bottom: 5px;
+}
+::ng-deep .margin-bottom-10 {
+  margin-bottom: 10px;
+}
+::ng-deep .margin-bottom-15 {
+  margin-bottom: 15px;
+}
+
+::ng-deep th.mat-header-cell {
+  text-align: center !important;
+  /* border: 1.5px solid #bab7b2; */
+  /* font-weight: bold; */
+  color: white;
+  background-color: #35a035;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+::ng-deep td.mat-cell:first-of-type,
+::ng-deep th.mat-header-cell:first-of-type {
+  padding-left: 10px;
+}
+::ng-deep td.mat-cell:last-of-type,
+::ng-deep th.mat-header-cell:last-of-type {
+  padding-right: 0px;
+}
+::ng-deep td.mat-cell,
+::ng-deep td.mat-footer-cell {
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+  /* border: 1.5px solid #bab7b2; */
+}

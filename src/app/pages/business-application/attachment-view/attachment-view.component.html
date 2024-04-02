@@ -1,0 +1,43 @@
+<mat-toolbar class="bg-primary attachment-view">
+  <div fxLayoutAlign="space-between center" fxLayout="row wrap" fxFlex="grow">
+    <mat-label>{{ formTitle }}</mat-label>
+    <div fxLayoutAlign="end center">
+      <!-- <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple="multiple"> -->
+      <input type="file" class="file-input" #fileUpload ng2FileSelect [uploader]="uploader" multiple  />
+      <button mat-raised-button color="secondary" (click)="fileUpload.click()" class="attach-file-button">
+        <mat-icon>attachment</mat-icon>
+        Attach File
+      </button>
+      <button mat-raised-button color="primary" (click)="saveAttachment()" class="attach-file-button">
+        <mat-icon>save</mat-icon>
+        Save Attachment
+      </button>
+      <button mat-mini-fab color="warn" (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-card class="entry-form attachment-view">
+  <div fxLayout="row" fxFlex class="formContent">
+    <div fxFlex="30" class="group">
+      <mat-selection-list #files [multiple]="false">
+        <mat-list-option *ngFor="let file of fileNames, let i = index" [value]="file">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxFlex="90" class="file-url">
+              {{ file.split("/")[file.split("/").length-1] }}
+            </div>
+            <button mat-mini-fab color="warn" (click)="deleteImage(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div fxFlex="70" fxLayout="column" class="group">
+      <div class="image-viewer">
+        <img class="ng-bg-grey-2" style="border-radius: 3px;" [src]="files.selectedOptions.selected[0]?.value ?? img_url" alt="Image">
+      </div>
+    </div>
+  </div>
+</mat-card>
