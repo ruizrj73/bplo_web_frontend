@@ -31,9 +31,9 @@ jobs:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bplo-web-frontend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/bplo-web-frontend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/bplo-web-frontend:buildcache,mode=max
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bplo_web_frontend:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/bplo_web_frontend:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/bplo_web_frontend:buildcache,mode=max
 
   deploy:
     needs: docker
@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{secrets.SSH_KEY}}
           script: |
-            cd deployment-scripts/gso/ 
-            docker compose pull gso_frontend
-            docker compose up gso_frontend -d
-            docker compose logs --tail 20 gso_frontend
+            cd deployment-scripts/bplo_mobile/ 
+            docker compose pull bplo_web_frontend
+            docker compose up bplo_web_frontend -d
+            docker compose logs --tail 20 bplo_web_frontend
