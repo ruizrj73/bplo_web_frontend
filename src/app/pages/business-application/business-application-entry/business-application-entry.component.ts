@@ -13,6 +13,12 @@ import { BusinessContactInfoModel } from 'src/app/data-model/business-contact-in
 import { BusinessAddressInfoModel } from 'src/app/data-model/business-address-info-model';
 import { BusinessOperationInfoModel } from 'src/app/data-model/business-operation-info-model';
 import { HttpRequestService } from 'src/app/services/http-request.service';
+import { LineOfBusinessModel } from 'src/app/data-model/line-of-business-model';
+import { LineOfBusinessMeasurePaxModel } from 'src/app/data-model/line-of-business-measure-pax-model';
+import { LineOfBusinessDialogComponent } from '../line-of-business-dialog/line-of-business-dialog.component';
+import { MeasurePaxDialogComponent } from '../measure-pax-dialog/measure-pax-dialog.component';
+import { SetupLineBusinessModel } from 'src/app/data-model/setup-line-business-model';
+import { SetupMeasurePaxModel } from 'src/app/data-model/setup-measure-pax-model';
 
 export interface DialogData {
   selectedBusinessApplication: BusinessApplicationModel,
@@ -20,7 +26,7 @@ export interface DialogData {
 
 @Component({
   selector: 'app-business-application-entry',
-  templateUrl: './business-application-entry.component.html',
+  templateUrl: './business-application-entry1.component.html',
   styleUrls: ['./business-application-entry.component.scss']
 })
 export class BusinessApplicationEntryComponent implements OnInit {
@@ -32,6 +38,8 @@ export class BusinessApplicationEntryComponent implements OnInit {
   paymentModeSelection: string[] = ['Annually', 'Semi-Annually', 'Quarterly'];
   orgTypeSelection: string[] = ['Sole Proprietorship', 'Partnership', 'Corporation', 'Cooperative', 'One Person Corporation'];
   businessOperationSelection: string[] = ["Main Office", "Branch Office", "Admin Office", "Others"];
+  lineOfBusinessSelection: SetupLineBusinessModel[] = [];
+  measurePaxSelection: SetupMeasurePaxModel[] = [];
   zipcodeSelection: string[] = ["6000"];
   regionSelection: string[] = ["Region 7"];
   provinceSelection: string[] = ["Cebu"];
@@ -119,12 +127,31 @@ export class BusinessApplicationEntryComponent implements OnInit {
     "Zapatera",
   ];
   docRequirements: MatTableDataSource<BusinessAttachmentModel> = new MatTableDataSource<BusinessAttachmentModel>([]);
-  displayedColumns: string[] = [
+  lineOfBusinessList: MatTableDataSource<LineOfBusinessModel> = new MatTableDataSource<LineOfBusinessModel>([]);
+  measurePaxList: MatTableDataSource<LineOfBusinessMeasurePaxModel> = new MatTableDataSource<LineOfBusinessMeasurePaxModel>([]);
+  displayedColumnsAttachment: string[] = [
     'file_description',
     'file_url',
     'file_name',
     'action',
   ];
+  displayedColumnsLineOfBusiness: string[] = [
+    'code',
+    'description',
+    'type',
+    'units',
+    'capital',
+    'essential',
+    'non-essential',
+    'action',
+  ]
+  displayedColumnsMeasurePax: string[] = [
+    'unit',
+    'capacity',
+    'measurepax',
+    'lineofbusiness',
+    'action',
+  ]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -138,11 +165,26 @@ export class BusinessApplicationEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.initSetup();
     this.initDocRequirements();
 
     if (this.data.selectedBusinessApplication != null) {
       this.initData(this.data.selectedBusinessApplication);
     }
+  }
+
+  initSetup() {
+    this.httpRequest.getLineOfBusiness().subscribe((result) => {
+      if (result.statusCode == 200) {
+        this.lineOfBusinessSelection = result.data;
+      }
+    });
+
+    this.httpRequest.getMeasurePax().subscribe((result) => {
+      if (result.statusCode == 200) {
+        this.measurePaxSelection = result.data;
+      }
+    });
   }
 
   initData(data: BusinessApplicationModel) {
@@ -217,6 +259,11 @@ export class BusinessApplicationEntryComponent implements OnInit {
         this.docRequirements.data.find((_att) => _att.file_description == att.file_description).file_name += att.file_name + " | ";
       }
     })
+
+    this.lineOfBusinessList.data = data.line_of_business ?? [];
+    this.refreshLineOfBusinessTable();
+    this.measurePaxList.data = data.line_of_business_measure_pax ?? [];
+    this.refreshMeasurePaxTable();
   }
 
   initDocRequirements() {
@@ -321,6 +368,11 @@ export class BusinessApplicationEntryComponent implements OnInit {
     this.businessApplicationFormGroup.controls['owner_subdivision'].setValue(value ? this.businessApplicationFormGroup.get("business_subdivision")?.value : "");
   }
 
+  setDeliveryNotApplicable(value: any) {
+    this.businessApplicationFormGroup.controls['total_delivery_vehicle_van_truck'].setValue(0);
+    this.businessApplicationFormGroup.controls['total_delivery_vehicle_motorcycle'].setValue(0);
+  }
+
   setStep(index: number) {
     this.entryStep = index;
   }
@@ -352,6 +404,79 @@ export class BusinessApplicationEntryComponent implements OnInit {
         this.docRequirements.data[index].file_url = img_urls;
       }
     });
+  }
+
+  addLineOfBusiness()  {
+    const dialogRef = this.dialog.open(LineOfBusinessDialogComponent, {
+      data: {
+        selection: this.lineOfBusinessSelection,
+        dataSelected: null,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.lineOfBusinessList.data.push(result);
+        this.refreshLineOfBusinessTable();
+      }
+    });
+  }
+
+  editLineOfBusiness(index: number) {
+    const dialogRef = this.dialog.open(LineOfBusinessDialogComponent, {
+      data: {
+        selection: this.lineOfBusinessSelection,
+        dataSelected: this.lineOfBusinessList.data[index],
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.lineOfBusinessList.data.push(result);
+        this.refreshLineOfBusinessTable();
+      }
+    });
+  }
+
+  removeLineOfBusiness(index: number) {
+    this.lineOfBusinessList.data.splice(index, 1);
+    this.refreshLineOfBusinessTable();
+  }
+
+  refreshLineOfBusinessTable() {
+    let cloned = this.lineOfBusinessList.data.slice();
+    this.lineOfBusinessList.data = cloned;
+  }
+
+  addMeasurePax() {
+    const dialogRef = this.dialog.open(MeasurePaxDialogComponent, {
+      data: {
+        selection: this.measurePaxSelection,
+        selectionLineBusiness: this.lineOfBusinessList.data,
+        dataSelected: null,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.measurePaxList.data.push(result);
+        this.refreshMeasurePaxTable();
+      }
+    });
+  }
+
+  editMeasurePax(index: number) {
+
+  }
+
+  removeMeasurePax(index: number) {
+    this.measurePaxList.data.splice(index, 1);
+    this.refreshMeasurePaxTable();
+  }
+
+  refreshMeasurePaxTable() {
+    let cloned = this.measurePaxList.data.slice();
+    this.measurePaxList.data = cloned;
   }
 
   viewAttachment(index: number) {
@@ -461,6 +586,25 @@ export class BusinessApplicationEntryComponent implements OnInit {
       this.businessApplicationFormGroup.get("bangko_sentral_registered")?.value,
       "",
     )
+    var bAttachment: BusinessAttachmentModel[] = [];
+    this.docRequirements.data.forEach((r) => {
+      if (r.file_url != "") {
+        var u: string[] = r.file_url.split(" | ");
+        u.forEach((url) => {
+          if (url.trim() != "") {
+            bAttachment.push(new BusinessAttachmentModel(
+              "",
+              url.split(".").reverse()[0],
+              url.split("/").reverse()[0],
+              r.file_description,
+              url.trim(),
+              "",
+            ))
+          }
+        })
+      }
+    });
+
     var businessApp: BusinessApplicationModel = new BusinessApplicationModel(
       this.businessApplicationFormGroup.get("id")?.value,
       this.businessApplicationFormGroup.get("transaction_no")?.value,
@@ -477,13 +621,14 @@ export class BusinessApplicationEntryComponent implements OnInit {
       this.businessApplicationFormGroup.get("dtiseccda_registration_no")?.value,
       this.businessApplicationFormGroup.get("remarks")?.value,
       this.businessApplicationFormGroup.get("application_status")?.value,
-      [],
+      bAttachment,
       [boi],
       [bci],
       [bai],
       [boai],
       bOperation,
-      []
+      this.lineOfBusinessList.data,
+      this.measurePaxList.data
     )
     if (this.data.selectedBusinessApplication != null) {
       this.httpRequest.updateBusinessApplication(this.businessApplicationFormGroup.get("id")?.value, businessApp).subscribe((result) => {

@@ -4,7 +4,8 @@ import { BusinessContactInfoModel } from "./business-contact-info-model";
 import { BusinessOperationInfoModel } from "./business-operation-info-model";
 import { BusinessOwnerAddressInfoModel } from "./business-owner-address-model";
 import { BusinessOwnerInfoModel } from "./business-owner-info-model";
-import { LineOfBusinessModel } from "./line-or-business-model";
+import { LineOfBusinessMeasurePaxModel } from "./line-of-business-measure-pax-model";
+import { LineOfBusinessModel } from "./line-of-business-model";
 
 export class BusinessApplicationModel {
   constructor(
@@ -30,6 +31,7 @@ export class BusinessApplicationModel {
     public business_owner_address_info: BusinessOwnerAddressInfoModel[],
     public business_operation_info: BusinessOperationInfoModel,
     public line_of_business: LineOfBusinessModel[],
+    public line_of_business_measure_pax: LineOfBusinessMeasurePaxModel[],
   ) {
     return {
       id,
@@ -54,6 +56,7 @@ export class BusinessApplicationModel {
       business_owner_address_info,
       business_operation_info,
       line_of_business,
+      line_of_business_measure_pax,
     }
   }
 }

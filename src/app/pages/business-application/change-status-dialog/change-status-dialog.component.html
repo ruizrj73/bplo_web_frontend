@@ -32,19 +32,27 @@
           </mat-label>
           <mat-form-field appearance="fill">
             <mat-select (selectionChange)="statusSelectedValue($event)"
-                [(ngModel)]="selectedStatus" [ngModelOptions]="{standalone: true}">
-              <mat-option *ngFor="let stat of listStatus" [value]="stat">
-                {{stat}}
+                [(ngModel)]="selectedStatus.value" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let stat of listStatus" [value]="stat.id">
+                {{stat.application_type}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxLayout="column">
+        <div fxLayout="column" >
           <mat-label class="label">
             Message
           </mat-label>
-          <mat-form-field appearance="fill">
-            <input matInput [(ngModel)]="message" [ngModelOptions]="{standalone: true}">
+          <mat-form-field appearance="fill" class="margin-bottom-5">
+            <mat-select (selectionChange)="messageSelectedValue($event)"
+                [(ngModel)]="message.value" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let msg of listMessage" [value]="msg.id">
+                {{msg.message}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" *ngIf="this.message.value == '-'">
+            <input matInput [(ngModel)]="otherMessage" [ngModelOptions]="{standalone: true}">
           </mat-form-field>
         </div>
       </div>

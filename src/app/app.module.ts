@@ -29,6 +29,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import * as cloudinary from 'cloudinary-core';
 import cloudinaryConfiguration from './../config';
+import { LineOfBusinessDialogComponent } from './pages/business-application/line-of-business-dialog/line-of-business-dialog.component';
+import { MeasurePaxDialogComponent } from './pages/business-application/measure-pax-dialog/measure-pax-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import cloudinaryConfiguration from './../config';
     BusinessApplicationEntryComponent,
     AttachmentViewComponent,
     ChangeStatusDialogComponent,
+    LineOfBusinessDialogComponent,
+    MeasurePaxDialogComponent,
   ],
   imports: [
     ToastrModule.forRoot({

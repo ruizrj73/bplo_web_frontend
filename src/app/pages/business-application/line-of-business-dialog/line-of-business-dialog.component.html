@@ -1,0 +1,71 @@
+<mat-toolbar class="bg-primary line-of-business-dialog">
+  <div fxLayoutAlign="space-between center" fxLayout="row wrap" fxFlex="grow">
+    <mat-label>{{ formTitle }}</mat-label>
+    <button mat-mini-fab color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<mat-card class="line-of-business-dialog">
+  <div fxLayout="column" fxFlex class="formContent">
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Line of Business
+      </mat-label>
+      <mat-form-field appearance="fill" class="cb">
+        <mat-select (selectionChange)="lineBusinessSelectedValue($event)"
+            [(ngModel)]="lineBusinessSelected.value" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let sel of data.selection" [value]="sel.id">
+            {{ sel.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label margin-bottom-10">
+        Application Type
+      </mat-label>
+      <mat-radio-group [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+        <mat-radio-button value="New">New</mat-radio-button>
+        <mat-radio-button value="Renew">Renew</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Units
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="units" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Capital Investment
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="capital" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Essential
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="essential" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-15">
+      <mat-label class="label">
+        Non-Essential
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="nonEssential" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    
+    <button mat-raised-button color="primary" (click)="saveLineBusiness()">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+  </div>
+</mat-card>

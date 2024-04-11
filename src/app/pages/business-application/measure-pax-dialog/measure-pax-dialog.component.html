@@ -1,0 +1,59 @@
+<mat-toolbar class="bg-primary measure-pax-dialog">
+  <div fxLayoutAlign="space-between center" fxLayout="row wrap" fxFlex="grow">
+    <mat-label>{{ formTitle }}</mat-label>
+    <button mat-mini-fab color="warn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<mat-card class="measure-pax-dialog">
+  <div fxLayout="column" fxFlex class="formContent">
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Number of Units
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="units" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Capacity
+      </mat-label>
+      <mat-form-field appearance="fill">
+        <input matInput type="number" [(ngModel)]="capacity" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-10">
+      <mat-label class="label">
+        Measure or Pax
+      </mat-label>
+      <mat-form-field appearance="fill" class="cb">
+        <mat-select (selectionChange)="measurePaxSelectedValue($event)"
+            [(ngModel)]="measurePaxSelected.value" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let sel of data.selection" [value]="sel.id">
+            {{ sel.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="column" class="margin-bottom-15">
+      <mat-label class="label">
+        Line of Business
+      </mat-label>
+      <mat-form-field appearance="fill" class="cb">
+        <mat-select (selectionChange)="lineBusinessSelectedValue($event)"
+            [(ngModel)]="lineBusinessSelected.value" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let sel of data.selectionLineBusiness" [value]="sel.line_of_business">
+            {{ sel.line_of_business }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <button mat-raised-button color="primary" (click)="saveLineBusiness()">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+  </div>
+</mat-card>

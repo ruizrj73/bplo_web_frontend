@@ -14,6 +14,7 @@ export class requestRoutes {
   public listUnitConversionApi: string = "unitConversion";
 
   public businessApplication: string = "business-application";
+  public businessApplicationSetup: string = "setup";
 
   public appropriation: string = "appropriation";
   public listSOFDataApi: string = "appropriation/by-deptsofcatyear";

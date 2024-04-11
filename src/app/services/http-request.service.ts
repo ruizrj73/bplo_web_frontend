@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { isRegExp } from 'util';
-import { PurchaseRequestModel } from '../data-model/purchase-request-model';
 import { UserModel } from '../data-model/user-model';
 import { requestRoutes } from '../util/request_routes';
 import { BusinessApplicationModel } from '../data-model/business-application-model';
@@ -49,16 +46,24 @@ export class HttpRequestService {
     return this.http.delete(url);
   }
 
-  savePurchaseRequestAttachment(file: File): Observable<any> {
-    var url: string = "https://api.cloudinary.com/v1_1/de42wowt2/Attachment/PR";
-    var data = {
-      context: 'image=' + file.name,
-      file: file,
-      withcredentials: false,
-    };
-    return this.http.post(url, data, {headers: {
-      'Access-Control-Allow-Origin' : '*'
-    }});
+  
+
+  getApplicationStatus(): Observable<any> {
+    var url: string = routes.baseUrlBPLO + routes.businessApplicationSetup;
+    url = url + "/applicationStatus";
+    return this.http.get(url);
+  }
+
+  getLineOfBusiness(): Observable<any> {
+    var url: string = routes.baseUrlBPLO + routes.businessApplicationSetup;
+    url = url + "/linebusiness";
+    return this.http.get(url);
+  }
+
+  getMeasurePax(): Observable<any> {
+    var url: string = routes.baseUrlBPLO + routes.businessApplicationSetup;
+    url = url + "/measurepax";
+    return this.http.get(url);
   }
 
   getAllBusinessApplicationByMonthYear(date: string): Observable<any> {
@@ -102,57 +107,57 @@ export class HttpRequestService {
   
   
 
-  savePurchaseRequest(pr: PurchaseRequestModel): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    return this.http.post(url, pr);
-  }
+  // savePurchaseRequest(pr: PurchaseRequestModel): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   return this.http.post(url, pr);
+  // }
 
-  updatePurchaseRequest(id: string, pp: PurchaseRequestModel): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/" + id;
-    return this.http.patch(url, pp);
-  }
+  // updatePurchaseRequest(id: string, pp: PurchaseRequestModel): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/" + id;
+  //   return this.http.patch(url, pp);
+  // }
 
-  getPurchaseRequestTransactionNo(): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/transactionNo/transNo";
-    return this.http.get(url);
-  }
+  // getPurchaseRequestTransactionNo(): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/transactionNo/transNo";
+  //   return this.http.get(url);
+  // }
 
-  getPurchaseRequestTransactionCount(prId: string): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/transaction/count/" + prId;
-    return this.http.get(url);
-  }
+  // getPurchaseRequestTransactionCount(prId: string): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/transaction/count/" + prId;
+  //   return this.http.get(url);
+  // }
 
-  getPurchaseRequestConsoTransactionCount(prIds: string): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/consotransaction/count/" + prIds;
-    return this.http.get(url);
-  }
+  // getPurchaseRequestConsoTransactionCount(prIds: string): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/consotransaction/count/" + prIds;
+  //   return this.http.get(url);
+  // }
 
-  getPurchaseRequestCalloutTransactionCount(prIds: string): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/callouttransaction/count/" + prIds;
-    return this.http.get(url);
-  }
+  // getPurchaseRequestCalloutTransactionCount(prIds: string): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/callouttransaction/count/" + prIds;
+  //   return this.http.get(url);
+  // }
 
-  getAllPurchaseRequest(): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    return this.http.get(url);
-  }
+  // getAllPurchaseRequest(): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   return this.http.get(url);
+  // }
 
-  getAllPurchaseRequestByMonthYear(date: string): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/byMonthYear/" + date;
-    return this.http.get(url);
-  }
+  // getAllPurchaseRequestByMonthYear(date: string): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/byMonthYear/" + date;
+  //   return this.http.get(url);
+  // }
 
-  getAllPurchaseRequestForConsoByMonthYear(date: string): Observable<any> {
-    var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
-    url = url + "/byMonthYear/forConso/" + date;
-    return this.http.get(url);
-  }
+  // getAllPurchaseRequestForConsoByMonthYear(date: string): Observable<any> {
+  //   var url: string = routes.baseUrlBPLO + routes.purchaseRequest;
+  //   url = url + "/byMonthYear/forConso/" + date;
+  //   return this.http.get(url);
+  // }
 
   // Employee for Signatory
   getEmployees(): Observable<any> {
